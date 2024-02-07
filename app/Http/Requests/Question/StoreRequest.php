@@ -5,8 +5,9 @@ namespace App\Http\Requests\Question;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * @property-read string question
+ *
  */
+// @param string|undefined question
 class StoreRequest extends FormRequest
 {
     /**
