@@ -26,7 +26,7 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'question' => ['required'],
         ];
     }
 }

@@ -35,3 +35,16 @@ test('with the creation of the question, we need to make sure that it creates wi
         'question' => 'Lorem ipsum jeremias?',
     ]);
 });
+
+describe('validation rules', function () {
+    test('question::required', function () {
+        $user = User::factory()->create();
+
+        Sanctum::actingAs($user);
+
+        postJson(route('questions.store', []))
+            ->assertJsonValidationErrors([
+                'question' => 'required',
+            ]);
+    });
+});
