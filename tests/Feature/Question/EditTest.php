@@ -42,33 +42,42 @@ describe('validation rules', function () {
     });
 
     test('question::ending with question mark', function () {
-        $user = User::factory()->create();
+        $user     = User::factory()->create();
+        $question = Question::factory()->create([
+            'user_id' => $user->id,
+        ]);
 
         Sanctum::actingAs($user);
 
-        postJson(route('questions.store', [
-            'question' => 'Question without question mark',
-        ]))
+        putJson(route('questions.update', $question), [
+            'question' => 'Question shold have a mark',
+        ])
             ->assertJsonValidationErrors([
                 'question' => 'The question should end with question mark (?).',
             ]);
     });
 
     test('question::min characters should be 10', function () {
-        $user = User::factory()->create();
+        $user     = User::factory()->create();
+        $question = Question::factory()->create([
+            'user_id' => $user->id,
+        ]);
 
         Sanctum::actingAs($user);
 
-        postJson(route('questions.store', [
+        putJson(route('questions.update', $question), [
             'question' => 'Question?',
-        ]))
+        ])
             ->assertJsonValidationErrors([
                 'question' => 'least 10 characters',
             ]);
     });
 
     test('question::should be unique', function () {
-        $user = User::factory()->create();
+        $user     = User::factory()->create();
+        $question = Question::factory()->create([
+            'user_id' => $user->id,
+        ]);
 
         Question::factory()->create([
             'question' => 'Jeremias question?',
@@ -78,9 +87,9 @@ describe('validation rules', function () {
 
         Sanctum::actingAs($user);
 
-        postJson(route('questions.store', [
+        putJson(route('questions.update', $question), [
             'question' => 'Jeremias question?',
-        ]))
+        ])
             ->assertJsonValidationErrors([
                 'question' => 'already been taken',
             ]);
