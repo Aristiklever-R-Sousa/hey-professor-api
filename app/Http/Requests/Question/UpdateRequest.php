@@ -4,6 +4,7 @@ namespace App\Http\Requests\Question;
 
 use App\Rules\WithQuestionMark;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
 /**
@@ -17,7 +18,10 @@ class UpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        /** @var Question $question */
+        $question = $this->route()->question;
+
+        return Gate::allows('update', $question);
     }
 
     /**
@@ -27,13 +31,16 @@ class UpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+        /** @var Question $question */
+        $question = $this->route()->question;
+
         return [
             'question' => [
                 'required',
                 new WithQuestionMark(),
                 'min:10',
                 // 'unique:questions,'.$this->route()->question->id,
-                Rule::unique('questions')->ignore($this->route()->question->id), // @phpstan-ignore-line
+                Rule::unique('questions')->ignore($question->id), // @phpstan-ignore-line
             ],
         ];
     }
