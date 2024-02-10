@@ -19,7 +19,7 @@ class UpdateRequest extends FormRequest
     public function authorize(): bool
     {
         /** @var Question $question */
-        $question = $this->route()->question;
+        $question = $this->route()->question; // @phpstan-ignore-line
 
         return Gate::allows('update', $question);
     }
@@ -32,7 +32,7 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         /** @var Question $question */
-        $question = $this->route()->question;
+        $question = $this->route()->question; // @phpstan-ignore-line
 
         return [
             'question' => [
@@ -40,7 +40,7 @@ class UpdateRequest extends FormRequest
                 new WithQuestionMark(),
                 'min:10',
                 // 'unique:questions,'.$this->route()->question->id,
-                Rule::unique('questions')->ignore($question->id), // @phpstan-ignore-line
+                Rule::unique('questions')->ignore($question->id),
             ],
         ];
     }
