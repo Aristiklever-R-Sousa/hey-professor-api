@@ -96,4 +96,20 @@ describe('validation rules', function () {
 
     });
 
+    test('question::should be unique only if id is different', function () {
+        $user     = User::factory()->create();
+        $question = Question::factory()->create([
+            'question' => 'Jeremias question?',
+            'user_id'  => $user->id,
+        ]);
+
+        Sanctum::actingAs($user);
+
+        putJson(route('questions.update', $question), [
+            'question' => 'Jeremias question?',
+        ])
+        ->assertOk();
+
+    });
+
 });
