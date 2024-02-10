@@ -31,17 +31,17 @@ class UpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        /** @var Question $question */
+        /** @var \App\Models\Question $question */
         $question = $this->route()->question; // @phpstan-ignore-line
 
         return [
             'question' => [
                 'required',
                 new WithQuestionMark(),
-                new OnlyAsDraft($question), // @phpstan-ignore-line
+                new OnlyAsDraft($question),
                 'min:10',
                 // 'unique:questions,'.$this->route()->question->id,
-                Rule::unique('questions')->ignore($question->id), // @phpstan-ignore-line
+                Rule::unique('questions')->ignore($question->id),
             ],
         ];
     }
