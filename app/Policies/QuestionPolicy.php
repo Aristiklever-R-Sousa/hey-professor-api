@@ -56,6 +56,14 @@ class QuestionPolicy
     }
 
     /**
+     * Determine whether the user can publish the model.
+     */
+    public function publish(User $user, Question $question): bool
+    {
+        return $user->is($question->user);
+    }
+
+    /**
      * Determine whether the user can restore the model.
      */
     public function restore(User $user, Question $question): bool
