@@ -13,6 +13,8 @@ class DeleteController extends Controller
      */
     public function __invoke(Question $question)
     {
+        $this->authorize('forceDelete', $question);
+
         $question->forceDelete();
 
         return response()->noContent();

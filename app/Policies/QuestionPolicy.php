@@ -44,7 +44,7 @@ class QuestionPolicy
      */
     public function delete(User $user, Question $question): bool
     {
-        return true;
+        return $user->is($question->user);
     }
 
     /**
@@ -60,6 +60,6 @@ class QuestionPolicy
      */
     public function forceDelete(User $user, Question $question): bool
     {
-        return true;
+        return $user->is($question->user);
     }
 }
