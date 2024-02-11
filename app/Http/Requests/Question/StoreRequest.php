@@ -6,9 +6,9 @@ use App\Rules\WithQuestionMark;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- *
+ * @property-read string $question
  */
-// @param string|undefined question
+
 class StoreRequest extends FormRequest
 {
     /**
